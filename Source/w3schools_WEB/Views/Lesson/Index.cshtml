@@ -2,14 +2,7 @@
     ViewData["Title"] = "Lessons";
     Layout = "Admin_Layout";
 }
-<div class="page-content">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Lesson</a></li>
-            <li class="breadcrumb-item active" aria-current="page">List Lessons</li>
-        </ol>
-    </nav>
+<div class="page-content">    
     <div class="p-4">
         <div class="justify-content-end d-inline-flex w-100">
             <button id="addBtn" type="button" class="btn mr-2"><i class="mr-2 fa fa-plus"></i>Add</button>
@@ -19,7 +12,7 @@
         <div class="clearfix"></div>
     </div>
 
-    <div class="text-center">
+    <div class="text-center grid-ctn">
         <div id="grid"></div>
     </div>
 </div>
@@ -30,7 +23,7 @@
         load: function () {
             var d = $.Deferred();
             $.ajax({
-                "async": false,
+                "async": true,
                 "crossDomain": true,
                 "url": "@Url.Action("GetListLessonCategories", "LessonCategories")",
                 "headers": {
@@ -83,4 +76,8 @@
     dataGrid.columnOption("dateCreated", "visible", true);
     dataGrid.columnOption("createdBy", "visible", true);
     dataGrid.columnOption("modifiedBy", "visible", true);
+    $(function () {
+        $(".breadcrumb").children().last().find("span").text("Lesson");
+    })
 </script>
+

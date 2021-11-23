@@ -11,7 +11,7 @@ namespace w3schools_API.Models
 		public string UserName { get; set; }
 		public int? RoleId { get; set; }
 		public string PassWord { get; set; }
-		public string Salt { get; set; }
+		public string Email { get; set; }
 		public DateTime? DateCreated { get; set; }
 		public DateTime? DateModified { get; set; }
 		public string CreatedBy { get; set; }

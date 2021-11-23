@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -21,15 +22,17 @@ namespace w3schools_API.Controllers
             this.services = services;
             constr = config.GetConnectionString("CN");
         }
-
+        
         [HttpGet]
+        //[Authorize]
         public async Task<IActionResult> GetList()
         {
             var results = await services.GetList(constr);
             return Ok(results);
         }
-
+        
         [HttpPost]
+        //[Authorize]
         public async Task<IActionResult> Update(IEnumerable<UpdateBatchData<LessonCategories>> data, string username = "admin")
         {
             var result = await services.UpdateBatchMode(constr, data, username);

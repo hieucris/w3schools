@@ -8,17 +8,23 @@ namespace w3schools_WEB.ApiCaller
 {
     public partial class ApiClient
     {
-        public async Task<List<LessonContents>> GetLstBankdfddsff(string token)
+        public async Task<List<Users>> getListUser(string token = "")
         {
-            Uri toApi = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture, "LstBank/GetList"));
-            var results = await GetAsync<List<LessonContents>>(toApi, token);
+            Uri toApi = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Users/GetList"));
+            var results = await GetAsync<List<Users>>(toApi,token);
             return results;
         }
 
-        public async Task<DataResults<IEnumerable<UpdateBatchData<LessonContents>>>> Updateadffd(string token, IEnumerable<UpdateBatchData<LessonContents>> data, string user)
+        public async Task<DataResults<Users>> insertUser(Users data, string user = "Administrator", string token = "")
         {
-            Uri toApi = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture, "LstBank/Update?username=" + user));
-            var results = await NewPostAsync<IEnumerable<UpdateBatchData<LessonContents>>>(toApi, data, token);
+            Uri toApi = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Users/Insert?username=" + user));
+            var results = await NewPostAsync<Users>(toApi, data,token);
+            return results;
+        
+        }public async Task<DataResults<int>> deleteUser(int id, string user = "Administrator",string token ="")
+        {
+            Uri toApi = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Users/Delete?id="+id));
+            var results = await GetAsync<DataResults<int>>(toApi,token);
             return results;
         }
     }

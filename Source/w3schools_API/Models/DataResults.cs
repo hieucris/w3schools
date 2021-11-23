@@ -12,6 +12,15 @@ namespace w3schools_API.Models
         public string Message { get; set; }
 
         public T Data { get; set; }
+        
+        public DataResults(int st, string mess, T d)
+        {
+            Status = st;
+            Message = mess;
+            Data = d;
+        }
+        public DataResults() { }
+        
     }
     public class UpdateBatchData<T>
     {

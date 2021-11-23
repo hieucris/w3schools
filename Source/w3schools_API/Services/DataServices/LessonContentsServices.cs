@@ -1,9 +1,13 @@
-﻿using System;
+﻿using SqlKata.Compilers;
+using SqlKata.Execution;
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Data.SqlClient;
+using Dapper;
 using System.Threading.Tasks;
 using w3schools_API.Models;
 using w3schools_API.Services.Interfaces;
+using System.Linq;
 
 namespace w3schools_API.Services.DataServices
 {
@@ -19,7 +23,7 @@ namespace w3schools_API.Services.DataServices
         public async Task<IEnumerable<LessonContents>> GetList(string constr, string filters)
         {
             var result = await basesvc.GetList<LessonContents>(table, constr,filters);
-            return result;
+            return result.OrderBy(x=>x.ContentOrder);
         }
         public async Task<LessonContents> GetById(string constr, int id)
         {
@@ -29,7 +33,12 @@ namespace w3schools_API.Services.DataServices
         public async Task<DataResults<object>> Insert(LessonContents data,string constr)
         {
             basesvc.CommonUpdate(data, "admin", "create");
-            object obj = new
+            using (var con = new SqlConnection(constr))
+            {                
+                var enumOrder = await con.QueryAsync<int>("Select MAX(ContentOrder) from LessonContents");
+                data.ContentOrder = enumOrder.ElementAt(0)+1;
+            }
+                object obj = new
             {
                 data.ContentTitle,
                 data.ContentTypeId,

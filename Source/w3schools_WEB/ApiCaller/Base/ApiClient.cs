@@ -18,7 +18,7 @@ namespace w3schools_WEB.ApiCaller
     {
         #region Variable
 
-        private HttpClient _httpClient;
+        private HttpClient _httpClient;        
 
         private Uri BaseEndPoint { get; set; }
         
@@ -35,8 +35,7 @@ namespace w3schools_WEB.ApiCaller
 
             BaseEndPoint = baseEndPoint;
 
-            _httpClient = new HttpClient();
-
+            _httpClient = new HttpClient();            
         }
 
         #endregion
@@ -47,8 +46,11 @@ namespace w3schools_WEB.ApiCaller
         {
             if (!string.IsNullOrEmpty(accessToken))
             {
-                _httpClient.DefaultRequestHeaders.Remove("Authorization");
-                _httpClient.DefaultRequestHeaders.Add("Authorization",accessToken);
+                //_httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                //_httpClient.DefaultRequestHeaders.ConnectionClose = true;
+                //_httpClient.DefaultRequestHeaders.Remove("Authorization");
+                //_httpClient.DefaultRequestHeaders.Add("Authorization",accessToken);
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             }
         }
 
@@ -88,6 +90,7 @@ namespace w3schools_WEB.ApiCaller
         private async Task<T> GetAsync<T>(Uri requestUrl, string token = "")
         {
             AddHeaders(token);
+           
             var response = await _httpClient.GetAsync(requestUrl, HttpCompletionOption.ResponseHeadersRead);
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
@@ -109,7 +112,7 @@ namespace w3schools_WEB.ApiCaller
             });
             return returns;
         }
-        private async Task<Message<T>> PostAsync<T>(Uri requestUrl, T content, string token)
+        private async Task<Message<T>> PostAsync<T>(Uri requestUrl, T content, string token="")
         {
             AddHeaders(token);
             var response = await _httpClient.PostAsync(requestUrl.ToString(), CreateHttpContent<T>(content));
@@ -127,7 +130,24 @@ namespace w3schools_WEB.ApiCaller
             return returns;
         }
 
-        private async Task<Message<T1>> PostAsync<T1, T2>(Uri requestUrl, T2 content, string token="")
+        private async Task<T1> PostAsyncForToken<T1, T2>(Uri requestUrl, T2 content, string token="")
+        {
+            AddHeaders(token);
+            var response = await _httpClient.PostAsync(requestUrl.ToString(), CreateHttpContent<T2>(content));
+            response.EnsureSuccessStatusCode();
+            var data = await response.Content.ReadAsStringAsync();
+            var returns = new Message<T1>
+            {
+                Data = JsonSerializer.Deserialize<T1>(data, new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                }),
+                IsSuccess = response.IsSuccessStatusCode,
+                ReturnMessage = response.ReasonPhrase
+            };
+            return returns.Data;
+        }
+        private async Task<Message<T1>> PostAsync<T1, T2>(Uri requestUrl, T2 content, string token = "")
         {
             AddHeaders(token);
             var response = await _httpClient.PostAsync(requestUrl.ToString(), CreateHttpContent<T2>(content));
@@ -156,7 +176,6 @@ namespace w3schools_WEB.ApiCaller
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
         }
-
         private async Task<T> DeleteAsync<T>(Uri requestUrl, string token="")
         {
             AddHeaders(token);
@@ -169,7 +188,6 @@ namespace w3schools_WEB.ApiCaller
             });
 
         }
-
         private Uri CreateRequestUri(string relativePath, string queryString = "")
         {
             var endpoint = new Uri(BaseEndPoint, relativePath);
@@ -187,7 +205,7 @@ namespace w3schools_WEB.ApiCaller
         {
             try
             {
-                var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture, "CheckToken"));
+                var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Token/CheckToken"));
 
                 var data = await GetAsync<int>(requestUrl, token);
 
@@ -198,61 +216,39 @@ namespace w3schools_WEB.ApiCaller
                 return 0;
             }
         }
-        
-        //public async Task<string> GetTokenAsync()
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Token/GetToken?u=Admin&p=ctco123"));
 
-        //    var data = await GetAsync<string>(requestUrl);
-            
-        //    return data;
-        //}
-
-        //public async Task<string> RefeshToken(UserInfoModel userInfo)
-        //{
-
-            
-        //    if (userInfo != null)
-        //    {
-        //        var ck = await CheckToken(userInfo.token);
-
-        //        if (ck != 0)
-        //        {
-        //            return userInfo.token;
-        //        }
-        //        else
-        //        {
-        //            string tokenNew = await GetTokenAsync();
-        //            return tokenNew;
-        //        }
-        //    }
-
-        //    return string.Empty;
-        //}
-
-        //send file parameter for api controller from video controller
-        public async Task<Message<String>> PostFormDataAsync<T>(Uri url, string token, T data)
+        public async Task<string> GetTokenAsync()
         {
-            var content = new MultipartFormDataContent();
-            AddHeaders(token);
-            if (data is FormFile)
-            {
-                var file = data as FormFile;
-                content.Add(new StreamContent(file.OpenReadStream()), file.Name, file.FileName);
-                content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data") { Name = file.Name, FileName = file.FileName };
-            }
-            var response = await _httpClient.PostAsync(url, content);
-            response.EnsureSuccessStatusCode();
-            var result = await response.Content.ReadAsStringAsync();
-            var returns = new Message<String>
-            {
-                Data = result,
-                IsSuccess = response.IsSuccessStatusCode,
-                ReturnMessage = response.ReasonPhrase
-            };
-            return returns;
+            
+           
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Token/GetToken?u=admin&p=123"));
 
+            var data = await GetAsync<string>(requestUrl);
+
+            return data;
         }
+
+        public async Task<string> RefeshToken(UserInfo userInfo)
+        {
+
+
+            if (userInfo != null)
+            {
+                var ck = await CheckToken(userInfo.Token);
+
+                if (ck != 0)
+                {
+                    return userInfo.Token;
+                }
+                else
+                {
+                    string tokenNew = await GetTokenAsync();
+                    return tokenNew;
+                }
+            }
+
+            return string.Empty;
+        }        
 
         #endregion
     }

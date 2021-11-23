@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -28,28 +29,33 @@ namespace w3schools_API.Controllers
             var results = await services.GetList(constr,filters);
             return Ok(results);
         }
+        
         [HttpGet]
         public async Task<IActionResult> GetById(int id)
         {
             var results = await services.GetById(constr,id);
             return Ok(results);
         }
-
+        
         [HttpDelete]
+        //[Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             var results = await services.Delete(constr, id);
             return Ok(results);
         }
-
+        
         [HttpPost]
+        //[Authorize]
         public async Task<IActionResult> Update(LessonContents data)
         {
             
             var results = await services.Update(data,constr);
             return Ok(results);
         }
+        
         [HttpPost]
+        //[Authorize]
         public async Task<IActionResult> Insert(LessonContents data)
         {
             var results = await services.Insert(data,constr);

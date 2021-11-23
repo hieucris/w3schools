@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using w3schools_WEB.ApiCaller;
+using w3schools_WEB.Models;
 
 namespace w3schools
 {
@@ -31,7 +33,13 @@ namespace w3schools
             // Runtime compiler
             services.AddRazorPages()
                 .AddRazorRuntimeCompilation();
-
+            
+            //session
+            services.AddDistributedMemoryCache();
+            services.AddSession(options => {
+                options.Cookie.Name = "W3schools";
+                options.IdleTimeout = TimeSpan.FromMinutes(30);//You can set Time   
+            });
         }
     
 
@@ -54,6 +62,8 @@ namespace w3schools
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

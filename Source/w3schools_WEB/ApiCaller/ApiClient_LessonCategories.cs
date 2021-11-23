@@ -11,14 +11,14 @@ namespace w3schools_WEB.ApiCaller
         public async Task<List<LessonCategories>> getListLessonCate(string token="")
         {
             Uri toApi = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture, "LessonCategories/GetList"));
-            var results = await GetAsync<List<LessonCategories>>(toApi);
+            var results = await GetAsync<List<LessonCategories>>(toApi,token);
             return results;
         }
 
-        public async Task<DataResults<IEnumerable<UpdateBatchData<LessonCategories>>>> updateBatchLessonCate( IEnumerable<UpdateBatchData<LessonCategories>> data, string user="su")
+        public async Task<DataResults<IEnumerable<UpdateBatchData<LessonCategories>>>> updateBatchLessonCate( IEnumerable<UpdateBatchData<LessonCategories>> data, string user= "Administrator", string token ="")
         {
             Uri toApi = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture, "LessonCategories/Update?username=" + user));
-            var results = await NewPostAsync<IEnumerable<UpdateBatchData<LessonCategories>>>(toApi, data);
+            var results = await NewPostAsync<IEnumerable<UpdateBatchData<LessonCategories>>>(toApi, data,token);
             return results;
         }
     }

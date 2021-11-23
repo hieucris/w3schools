@@ -3,8 +3,8 @@
 }
 
 <script>
-    var listLesson = [];
-    var listContent = []
+    let listLesson = [];
+    let listContent = []
 
     function renderSibar() {
         $(".sidebar-list").empty();
@@ -17,7 +17,7 @@
         $.ajax({
                 "async": true,
                 "crossDomain": true,
-                "url": "@Url.Action("CSS", "Home")?id="+id,
+                "url": "@Url.Action("RenderContents", "Home")?id="+id,
                 "headers": {
                     "Content-Type": "application/json",
                     "cache-control": "no-cache"
@@ -43,7 +43,8 @@
                 "method": "GET"
         }).done(function (result) {
                 listLesson = result;
-                renderSibar();                
+            renderSibar(); 
+            getContent(listLesson[0].lessonId);
             }).fail(function (xhr) {
                 console.log("get lesson list failed");
         });
@@ -62,7 +63,8 @@
         })
     }
     $(function () {
-        getListLesson();
+
+        getListLesson();        
     })
 </script>
 

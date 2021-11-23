@@ -1,15 +1,6 @@
 ﻿
 
-/* live code editor*/
-#sourceCode, #targetCode {
-    border: 2px solid #ddd;
-    height: 75vh;
-    width: 100%;
-}
-    #sourceCode{
-    resize:none !important;
-}
-/* end */
+
 /*main css*/
 .app {
 }
@@ -215,7 +206,7 @@ a.btn-link {
     margin: 15px 0px;
 }
 
-.main-content .example {
+.example {
     background: rgb(231, 233, 235);
     padding: 40px 20px;
     border-radius: 10px;

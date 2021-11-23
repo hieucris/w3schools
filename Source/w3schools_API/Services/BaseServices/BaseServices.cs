@@ -174,7 +174,7 @@ namespace w3schools_API.Services
             }
         }
 
-        public void CommonUpdate(object obj, string user, string type)
+        public void CommonUpdate(object obj, string user, string type,int role =1)
         {
             try
             {
@@ -188,6 +188,7 @@ namespace w3schools_API.Services
                     SetPropertyValue(obj, "DateModified", DateTime.Now,true);
                     SetPropertyValue(obj, "ModifiedBy", user,true);
                 }
+                SetPropertyValue(obj, "RoleId", role, true);
             }
             catch (Exception e)
             {

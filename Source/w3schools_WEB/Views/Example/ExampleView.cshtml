@@ -1,0 +1,214 @@
+﻿@{ 
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>@ViewData["Title"] Example</title>
+    <link rel="icon" href="~/image/favicon.ico" />
+    <!--bootstrap, jquery w3schools-->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!--front-end-->
+    <link href="~/css/base.css" rel="stylesheet" />
+    <link href="~/css/reset.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <script src="~/js/site.js"></script>
+    <!-- live code js-->
+    <script src="~/js/editor.js"></script>
+    <!--font-awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" />
+    <!--codemirror lib-->
+    <script src="~/lib/codemirror/lib/codemirror.js"></script>
+    <link href="~/lib/codemirror/lib/codemirror.css" rel="stylesheet" />
+    <link href="~/lib/codemirror/theme/3024-day.css" rel="stylesheet" />
+    <script src="~/lib/codemirror/addon/edit/closebrackets.js"></script>
+    <script src="~/lib/codemirror/addon/edit/closetag.js"></script>
+    <script src="~/lib/codemirror/addon/runmode/colorize.js"></script>
+    @*<script src="~/lib/codemirroraddon/hint/show-hint.js"></script>
+        <script src="~/lib/codemirror/addon/hint/xml-hint.js"></script>
+        <script src="~/lib/codemirror/addon/hint/html-hint.js"></script>*@
+    <script src="~/lib/codemirror/mode/xml/xml.js"></script>
+    <script src="~/lib/codemirror/mode/javascript/javascript.js"></script>
+    <script src="~/lib/codemirror/mode/css/css.js"></script>
+    <script src="~/lib/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+
+
+
+    @*<script src="~/lib/codemirror/addon/scroll/simplescrollbars.js"></script>*@
+</head>
+<body>
+    <div class="textareacontainer">
+        <div class="textarea">
+            <div style="overflow:auto;">
+                <div class="headerText">Edit This Code:</div>
+                <button class="seeResult" type="button" onclick="submitTryit()">See Result »</button>
+            </div>
+            <div class="textareawrapper">
+                <div id="codecolor" class=" codecolorCC"><span style="color:brown"><span style="color:mediumblue">&lt;</span>!DOCTYPE<span style="color:red"> html</span><span style="color:mediumblue">&gt;</span></span><br><span style="color:brown"><span style="color:mediumblue">&lt;</span>html<span style="color:mediumblue">&gt;</span></span><br><span style="color:brown"><span style="color:mediumblue">&lt;</span>title<span style="color:mediumblue">&gt;</span></span>W3.CSS<span style="color:brown"><span style="color:mediumblue">&lt;</span>/title<span style="color:mediumblue">&gt;</span></span><br><span style="color:brown"><span style="color:mediumblue">&lt;</span>meta<span style="color:red"> name<span style="color:mediumblue">="viewport"</span> content<span style="color:mediumblue">="width=device-width, initial-scale=1"</span></span><span style="color:mediumblue">&gt;</span></span><br><span style="color:brown"><span style="color:mediumblue">&lt;</span>link<span style="color:red"> rel<span style="color:mediumblue">="stylesheet"</span> href<span style="color:mediumblue">="../lib/w3.css"</span></span><span style="color:mediumblue">&gt;</span></span><br><span style="color:brown"><span style="color:mediumblue">&lt;</span>body<span style="color:mediumblue">&gt;</span></span><br><br><span style="color:brown"><span style="color:mediumblue">&lt;</span>div<span style="color:red"> class<span style="color:mediumblue">="w3-container w3-red"</span></span><span style="color:mediumblue">&gt;</span></span><br><span style="color:brown"><span style="color:mediumblue">&lt;</span>h1<span style="color:mediumblue">&gt;</span></span>London<span style="color:brown"><span style="color:mediumblue">&lt;</span>/h1<span style="color:mediumblue">&gt;</span></span><br><span style="color:brown"><span style="color:mediumblue">&lt;</span>p<span style="color:mediumblue">&gt;</span></span>London is the capital city of England.<br>It is the most populous city in the United Kingdom,<br>with a metropolitan area of over 13 million inhabitants.<span style="color:brown"><span style="color:mediumblue">&lt;</span>/p<span style="color:mediumblue">&gt;</span></span><br><span style="color:brown"><span style="color:mediumblue">&lt;</span>/div<span style="color:mediumblue">&gt;</span></span><br><br><span style="color:brown"><span style="color:mediumblue">&lt;</span>div<span style="color:red"> class<span style="color:mediumblue">="w3-container w3-green"</span></span><span style="color:mediumblue">&gt;</span></span><br><span style="color:brown"><span style="color:mediumblue">&lt;</span>h1<span style="color:mediumblue">&gt;</span></span>London<span style="color:brown"><span style="color:mediumblue">&lt;</span>/h1<span style="color:mediumblue">&gt;</span></span><br><span style="color:brown"><span style="color:mediumblue">&lt;</span>p<span style="color:mediumblue">&gt;</span></span>London is the capital city of England.<br>It is the most populous city in the United Kingdom,<br>with a metropolitan area of over 13 million inhabitants.<span style="color:brown"><span style="color:mediumblue">&lt;</span>/p<span style="color:mediumblue">&gt;</span></span><br><span style="color:brown"><span style="color:mediumblue">&lt;</span>/div<span style="color:mediumblue">&gt;</span></span><br><br><span style="color:brown"><span style="color:mediumblue">&lt;</span>/body<span style="color:mediumblue">&gt;</span></span><br><span style="color:brown"><span style="color:mediumblue">&lt;</span>/html<span style="color:mediumblue">&gt;</span></span> <br><br><br></div>
+                <textarea autocomplete="off" class="code_input textareaCC" id="textareaCode" wrap="logical" spellcheck="false">&lt;!DOCTYPE html&gt;
+
+                </textarea>                
+            </div>
+        </div>
+        <div class="iframecontainer">
+            <div class="iframe">
+                <div style="overflow:auto;">
+                    <div class="headerText">Result:</div>
+                    <div class="stackcontainer">
+                        <label for="stackhorizontally" title="Horizontally"><img src="/images/stack_horizontally.png"></label><input id="stackhorizontally" type="radio" onclick="restack(true)" name="stack" title="Horizontally">
+                        <label for="stackvertically" title="Vertically"><img src="/images/stack_vertically.png" style="margin-right:10px;"></label><input id="stackvertically" type="radio" onclick="restack(false)" name="stack" title="Vertically" checked="">
+                    </div>
+                </div>
+                <div id="iframewrapper" class="iframewrapper"><iframe frameborder="0" id="iframeResult"></iframe></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<style>
+    .container {
+        background-color: #f1f1f1;
+        width: 100%;
+        overflow: auto;
+        position: absolute;
+        top: 100px;
+        bottom: 0;
+        height: auto;
+        min-height: 250px;
+        min-width: 550px;
+    }
+    .textareacontainer, .iframecontainer {
+        transition: all ease 0.2s;
+    }
+    .textareacontainer {
+        position: relative;
+    }
+    .textareacontainer, .iframecontainer {
+        float: left;
+        height: 100%;
+        width: 50%;
+    }
+    .textarea, .iframe {
+        height: 100%;
+        width: 100%;
+        padding: 10px 15px;
+    }
+    .textarea, .iframe {
+        padding-top: 0;
+    }
+    .textarea {
+        padding-left: 1.5%;
+        padding-right: 0.75%;
+    }
+    .headerText {
+        line-height: 2.2;
+    }
+    .headerText {
+        width: auto;
+        float: left;
+        font-family: verdana;
+        font-size: 1em;
+        line-height: 2;
+    }
+    .seeResult, .stacked {
+        float: right;
+        font-size: 15px;
+        background-color: #555555;
+        color: #ffffff;
+        border: 1px solid #555555;
+        padding: 0 15px;
+        line-height: 1.45;
+        width: auto;
+        cursor: pointer;
+        box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
+    }
+    .seeResult {
+        line-height: 2.2;
+    }
+    .textareawrapper {
+        height: 93%;
+        position: relative;
+    }
+    .textareawrapper {
+        width: 100%;
+        height: 92%;
+        background-color: #ffffff;
+        box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
+    }
+    .textareacontainer, .iframecontainer {
+        float: left;
+        height: 100%;
+        width: 50%;
+    }
+    .iframe {
+        padding-left: 0.75%;
+        padding-right: 1.5%;
+    }
+    .textarea, .iframe {
+        padding-top: 0;
+    }
+    .iframe {
+        padding-left: 7 px;
+    }
+
+    .textarea, .iframe {
+        height: 100%;
+        width: 100%;
+        padding: 10 px 15 px;
+    }
+
+    element.style {
+    }
+
+    .headerText {
+        line-height: 2.2;
+    }
+
+    .headerText {
+        width: auto;
+        float: left;
+        font-family: verdana;
+        font-size: 1em;
+        line-height: 2;
+    }
+    .stackcontainer {
+        padding-top: 8 px;
+    }
+    .iframewrapper {
+        height: 93%;
+    }
+    .iframewrapper {
+        width: 100%;
+        height: 92%;
+        -webkit-overflow-scrolling: touch;
+        background-color: #ffffff;
+        box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
+    }
+    #iframeResult, #iframeSource {
+        background-color: #ffffff;
+        height: 100%;
+        width: 100%;
+    }
+    iframe[Attributes Style] {
+        border-top-width: 0px;
+        border-right-width: 0px;
+        border-bottom-width: 0px;
+        border-left-width: 0px;
+    }
+    iframe {
+        border-width: 2px;
+        border-style: inset;
+        border-color: initial;
+        border-image: initial;
+    }
+</style>
+
+

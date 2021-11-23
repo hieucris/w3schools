@@ -6,18 +6,12 @@
 }
 @model w3schools_API.Models.LessonContents;
 @{
-    var data = Model;   
+    var data = Model;
+    var rOrder = ViewBag.RowOrder;
     var meth = ViewBag.Method;
 }
 
-<div class="container">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Lesson Contents</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Add and Edit</li>
-        </ol>
-    </nav>
+<div class="container-fluid p-5">    
     <div  class="mt-5 row" >
         <div class="col-md-6">
             <div class="form-group">
@@ -70,13 +64,14 @@
     }
 </style>
 <script>
-    var data =  @Html.Raw(JsonConvert.SerializeObject(data));    
     
+    var data =  @Html.Raw(JsonConvert.SerializeObject(data));   
     var currContentType = data.ContentTypeId;
     var editor;
     var content="";
     var iframe;
     var method = @Html.Raw(JsonConvert.SerializeObject(meth));
+    var order = @Html.Raw(JsonConvert.SerializeObject(rOrder));
 
     var contentTypeStore = new DevExpress.data.CustomStore({
         key: "contentTypeId",
@@ -100,6 +95,7 @@
             return d.promise();
         }
     });
+    
     var lessonStore = new DevExpress.data.CustomStore({
         key: "lessonId",
         loadMode:"raw",
@@ -115,7 +111,7 @@
                 },
                 "method": "GET"
             }).done(function (result) {                
-                d.resolve(result);
+                d.resolve(result);                             
             }).fail(function (xhr) {
                 console.log("failed");
             });
@@ -152,7 +148,7 @@
 
     var ContentOrderTxtBox =
         $("#ContentOrder").dxNumberBox({
-            value: data.ContentOrder,
+            value: data.ContentOrder ? data.ContenOrder : order,
         }).dxValidator({
             validationGroup: "data",
             validationRules: [{
@@ -300,7 +296,6 @@
         }
     }
 
-
     function rotate() {
         var target = $(".workspace");
         if (target.hasClass("col-md-6")) {
@@ -314,8 +309,9 @@
     $(function () {
         //render editor
         renderEditor();
-
+        $(".breadcrumb").empty().append('<li class="breadcrumb-item"><span>Home</span></li>'+
+            '<li class= "breadcrumb-item active"><a href="/LessonContents/Index">Lesson Content</a></li > ' +
+            '<li class= "breadcrumb-item active"><span>Add & Edit</span></li>');
     });
-
 
 </script>   

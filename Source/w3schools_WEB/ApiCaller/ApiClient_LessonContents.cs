@@ -9,51 +9,51 @@ namespace w3schools_WEB.ApiCaller
 {
     public partial class ApiClient
     {
-        public async Task<LessonContents> GetLessonContentById(int id)
+        public async Task<LessonContents> GetLessonContentById(int id,string token = "")
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 "LessonContents/GetById?id= " + id));
 
-            var x = await GetAsync<LessonContents>(requestUrl);
+            var x = await GetAsync<LessonContents>(requestUrl,token);
 
             return x;
         }
 
-        public async Task<List<LessonContents>> GetListLessonContents(string filters="")
+        public async Task<List<LessonContents>> GetListLessonContents(string filters="",string token ="")
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 "LessonContents/GetList?filters="+filters));
 
-            var x = await GetAsync<List<LessonContents>>(requestUrl);
+            var x = await GetAsync<List<LessonContents>>(requestUrl,token);
 
             return x;
         }
 
-        public async Task<Message<DataResults<LessonContents>>> UpdateLessonContent(LessonContents requests)
+        public async Task<Message<DataResults<LessonContents>>> UpdateLessonContent(LessonContents requests,string user= "Administrator",string token="")
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 "LessonContents/Update"));
 
-            var x = await PostAsync<DataResults<LessonContents>, LessonContents>(requestUrl, requests);
+            var x = await PostAsync<DataResults<LessonContents>, LessonContents>(requestUrl, requests,token);
 
             return x;
         }
-        public async Task<Message<DataResults<LessonContents>>> InsertLessonContent(LessonContents requests)
+        public async Task<Message<DataResults<LessonContents>>> InsertLessonContent(LessonContents requests,string user,string token="")
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 "LessonContents/Insert"));
 
-            var x = await PostAsync<DataResults<LessonContents>, LessonContents>(requestUrl, requests);
+            var x = await PostAsync<DataResults<LessonContents>, LessonContents>(requestUrl, requests,token);
 
             return x;
         }
 
-        public async Task<DataResults<int>> DeleteLessonContent(int id)
+        public async Task<DataResults<int>> DeleteLessonContent(int id,string token ="")
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 "LessonContents/Delete?id=" + id));
 
-            var x = await DeleteAsync<DataResults<int>>(requestUrl);
+            var x = await DeleteAsync<DataResults<int>>(requestUrl,token);
 
             return x;
         }

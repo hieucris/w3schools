@@ -8,17 +8,19 @@ namespace w3schools_WEB.ApiCaller
 {
     public partial class ApiClient
     {
-        public async Task<List<LessonContents>> GetLstBankdfdf(string token)
+        public async Task<List<Roles>> getListRole(string token="")
         {
-            Uri toApi = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture, "LstBank/GetList"));
-            var results = await GetAsync<List<LessonContents>>(toApi, token);
-            return results;
-        }
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                "Roles/GetList"));
 
-        public async Task<DataResults<IEnumerable<UpdateBatchData<LessonContents>>>> Updateafd(string token, IEnumerable<UpdateBatchData<LessonContents>> data, string user)
+            var x = await GetAsync<List<Roles>>(requestUrl,token);
+
+            return x;
+        }
+        public async Task<DataResults<IEnumerable<UpdateBatchData<Roles>>>> updateBatchRole(IEnumerable<UpdateBatchData<Roles>> data, string user = "Administrator",string token="")
         {
-            Uri toApi = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture, "LstBank/Update?username=" + user));
-            var results = await NewPostAsync<IEnumerable<UpdateBatchData<LessonContents>>>(toApi, data, token);
+            Uri toApi = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Roles/Update?username=" + user));
+            var results = await NewPostAsync<IEnumerable<UpdateBatchData<Roles>>>(toApi, data,token);
             return results;
         }
     }

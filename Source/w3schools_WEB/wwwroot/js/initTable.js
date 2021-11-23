@@ -53,6 +53,7 @@ columns = columns.concat(defCol);
 var addBtn = $("#addBtn").dxButton({
     text: "Thêm",
     useIcon: true,
+    type:"danger",
     icon: "dx-icon dx-icon-inserttable",
     onClick: function () {
         dataGrid.addRow();
@@ -62,6 +63,7 @@ var addBtn = $("#addBtn").dxButton({
 var saveBtn = $("#saveBtn").dxButton({
     text: "Lưu",
     useIcon: true,
+    type:"success",
     icon: "save",
     onClick: function () {
         dataGrid.saveEditData();
@@ -71,6 +73,7 @@ var saveBtn = $("#saveBtn").dxButton({
 var refreshBtn = $("#refreshBtn").dxButton({
     text: "Nạp dữ liệu",
     useIcon: true,
+    type:"default",
     icon: "refresh",
     onClick: function () {
         dataGrid.cancelEditData();

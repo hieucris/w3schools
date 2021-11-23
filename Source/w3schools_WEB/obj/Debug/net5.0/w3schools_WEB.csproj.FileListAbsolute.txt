@@ -874,3 +874,12 @@ D:\Git project\w3schools\Source\w3schools_WEB\obj\Debug\net5.0\w3schools_WEB.dll
 D:\Git project\w3schools\Source\w3schools_WEB\obj\Debug\net5.0\ref\w3schools_WEB.dll
 D:\Git project\w3schools\Source\w3schools_WEB\obj\Debug\net5.0\w3schools_WEB.pdb
 D:\Git project\w3schools\Source\w3schools_WEB\obj\Debug\net5.0\w3schools_WEB.genruntimeconfig.cache
+D:\Git project\w3schools\Source\w3schools_WEB\obj\Debug\net5.0\Razor\Views\Users\Index.cshtml.g.cs
+D:\Git project\w3schools\Source\w3schools_WEB\obj\Debug\net5.0\Razor\Views\ContentType\Index.cshtml.g.cs
+D:\Git project\w3schools\Source\w3schools_WEB\bin\Debug\net5.0\BCrypt.Net-Core.dll
+D:\Git project\w3schools\Source\w3schools_WEB\obj\Debug\net5.0\Razor\Views\Auth\Signup.cshtml.g.cs
+D:\Git project\w3schools\Source\w3schools_WEB\obj\Debug\net5.0\Razor\Views\Auth\Login.cshtml.g.cs
+D:\Git project\w3schools\Source\w3schools_WEB\obj\Debug\net5.0\Razor\Views\Shared\_AuthLayout.cshtml.g.cs
+D:\Git project\w3schools\Source\w3schools_WEB\obj\Debug\net5.0\Razor\Views\Admin\Index.cshtml.g.cs
+D:\Git project\w3schools\Source\w3schools_WEB\obj\Debug\net5.0\Razor\Views\Example\ExampleView.cshtml.g.cs
+D:\Git project\w3schools\Source\w3schools_WEB\obj\Debug\net5.0\Razor\Views\Example\Index.cshtml.g.cs
