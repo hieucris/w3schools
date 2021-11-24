@@ -11,8 +11,8 @@
     var meth = ViewBag.Method;
 }
 
-<div class="container-fluid p-5">    
-    <div  class="mt-5 row" >
+<div class="container-fluid p-5">
+    <div class="mt-5 row">
         <div class="col-md-6">
             <div class="form-group">
                 <h5>Content Title:</h5>
@@ -46,11 +46,24 @@
         <div class="col-md-6 text-right" id="htmlSaveBtn"></div>
         <h5>Content:</h5>
         <div class="col-md-12" id="ctner">
-            
+
         </div>
     </div>
 </div>
 <style>
+    #framesize {
+        position: absolute;
+        right: 2rem;
+        top: 40%
+    }
+
+    #rotate {
+        border: unset;
+        padding: 0 0;
+    }
+    .row {
+        font-family: fontawesome;
+    }
     textarea:focus {
         outline: none !important;
         border: 1px solid #808080;
@@ -58,22 +71,24 @@
     }
     #ctner {
         background-color: #E7E9EB;
+        /*margin-top: 8rem;*/
     }
-    #targetCode{
-        background-color:#fff !important;
+    #targetCode {
+        background-color: #fff !important;
+        border: unset;
     }
 </style>
 <script>
-    
-    var data =  @Html.Raw(JsonConvert.SerializeObject(data));   
+
+    var data =  @Html.Raw(JsonConvert.SerializeObject(data));
     var currContentType = data.ContentTypeId;
     var editor;
     var content="";
-    var iframe;
+    var iframe = document.getElementById('targetCode');
     var method = @Html.Raw(JsonConvert.SerializeObject(meth));
     var order = @Html.Raw(JsonConvert.SerializeObject(rOrder));
 
-    var contentTypeStore = new DevExpress.data.CustomStore({
+    const contentTypeStore = new DevExpress.data.CustomStore({
         key: "contentTypeId",
         loadMode:"raw",
         load: function () {
@@ -87,7 +102,7 @@
                     "cache-control": "no-cache"
                 },
                 "method": "GET"
-            }).done(function (result) {                
+            }).done(function (result) {
                 d.resolve(result);
             }).fail(function (xhr) {
                 console.log("failed");
@@ -95,8 +110,8 @@
             return d.promise();
         }
     });
-    
-    var lessonStore = new DevExpress.data.CustomStore({
+
+    const lessonStore = new DevExpress.data.CustomStore({
         key: "lessonId",
         loadMode:"raw",
         load: function () {
@@ -110,8 +125,8 @@
                     "cache-control": "no-cache"
                 },
                 "method": "GET"
-            }).done(function (result) {                
-                d.resolve(result);                             
+            }).done(function (result) {
+                d.resolve(result);
             }).fail(function (xhr) {
                 console.log("failed");
             });
@@ -119,17 +134,17 @@
         }
     });
 
-    var TitleTxtBox = $("#ContentTitle").dxTextBox({
+    const TitleTxtBox = $("#ContentTitle").dxTextBox({
         value: data.ContentTitle
     }).dxTextBox("instance");
 
-    var LessonContentIdTxtBox = $("#LessonContentId").dxTextBox({
+    const LessonContentIdTxtBox = $("#LessonContentId").dxTextBox({
         value: data.LessonContentId,
         readOnly: true,
         hoverStateEnabled: false
     }).dxTextBox("instance");
 
-    var ContentTypeIdSelectBox = $("#ContentTypeId").dxSelectBox({
+    const ContentTypeIdSelectBox = $("#ContentTypeId").dxSelectBox({
         dataSource: contentTypeStore,
         displayExpr: "contentTypeName",
         valueExpr: "contentTypeId",
@@ -146,9 +161,9 @@
         }]
     }).dxSelectBox("instance");
 
-    var ContentOrderTxtBox =
+    const ContentOrderTxtBox =
         $("#ContentOrder").dxNumberBox({
-            value: data.ContentOrder ? data.ContenOrder : order,
+            value: data.ContentOrder ? data.ContentOrder : order,
         }).dxValidator({
             validationGroup: "data",
             validationRules: [{
@@ -157,13 +172,13 @@
             }]
         }).dxNumberBox  ("instance");
 
-    var LessonTxtBox = $("#LessonId").dxSelectBox({
+    const LessonTxtBox = $("#LessonId").dxSelectBox({
         value: data.LessonId,
         dataSource: lessonStore,
         displayExpr: "lessonName",
-        valueExpr: "lessonId",        
+        valueExpr: "lessonId",
         onValueChanged: function (e) {
-            
+
         }
     }).dxValidator({
         validationGroup: "data",
@@ -172,6 +187,10 @@
             message: " is required"
         }]
     }).dxSelectBox("instance");
+
+    function getSize() {
+        $("#framesize").find("span").text("Result Size: " + iframe.contentWindow.innerWidth + " x " + iframe.contentWindow.innerHeight);
+    }
 
     function renderEditor(){
         if (currContentType === 2) {
@@ -182,20 +201,29 @@
                 value: data.Content,
                 toolbar: {
                     items: [
-                        "undo", "redo", "separator",
+                        'undo', 'redo', 'separator',
                         {
-                            name: "size",
-                            acceptedValues: ["8pt", "10pt", "12pt", "14pt", "18pt", "24pt", "36pt"]
+                            name: 'size',
+                            acceptedValues: ['8pt', '10pt', '12pt', '14pt', '18pt', '24pt', '36pt'],
                         },
                         {
-                            name: "font",
-                            acceptedValues: ["Arial", "Courier New", "Georgia", "Impact", "Lucida Console", "Tahoma", "Times New Roman", "Verdana"]
+                            name: 'font',
+                            acceptedValues: ['Arial', 'Courier New', 'Georgia', 'Impact', 'Lucida Console', 'Tahoma', 'Times New Roman', 'Verdana'],
                         },
-                        "separator",
-                        "bold", "italic", "strike", "underline", "separator",
-                        "alignLeft", "alignCenter", "alignRight", "alignJustify", "separator",
-                        "color", "background"
-                    ]
+                        'separator', 'bold', 'italic', 'strike', 'underline', 'separator',
+                        'alignLeft', 'alignCenter', 'alignRight', 'alignJustify', 'separator',
+                        'orderedList', 'bulletList', 'separator',
+                        {
+                            name: 'header',
+                            acceptedValues: [false, 1, 2, 3, 4, 5],
+                        }, 'separator',
+                        'color', 'background', 'separator',
+                        'link', 'image', 'separator',
+                        'clear', 'codeBlock', 'blockquote', 'separator',
+                        'insertTable', 'deleteTable',
+                        'insertRowAbove', 'insertRowBelow', 'deleteRow',
+                        'insertColumnLeft', 'insertColumnRight', 'deleteColumn',
+                    ],
                 }, onValueChanged: function (e) {
                     content = e.value;
                 }
@@ -203,46 +231,48 @@
 
         } else if (currContentType === 1 || currContentType ===3) {
             $("#htmlSaveBtn").empty();
-            $("#Content").empty();
             var code;
             if (data.Content != null) {
                 if (currContentType === 1)
                     code =  data.Content;
-                else {
-                    code = '<div class="main-content">\n    <div class="example">\n        <h3>Example</h3>\n        <div class="w3-code">\n            <\!-- start css-block -->\n' + data.Content + '\n \n \n \n \n \n            <\!-- end css-block -->\n        </div>\n        <a class="btn-link" target="_blank" href="">Try it Yourself >></a>\n    </div>\n</div>';
-                }
+                else
+                    code = '<div class="main-content">\n    <div class="example">\n        <h3>Example</h3>\n        <div class="w3-code">\n            <\!-- start css-block -->\n' + data.Content + '\n \n \n \n \n \n            <\!-- end css-block -->\n        </div>\n        <a class=" try-it-btn btn-link" target="_blank" href="">Try it Yourself >></a>\n    </div>\n</div>';
             } else {
-                if (currContentType === 1) {
-                    code = content !=""? content: "";
-                }
-                else {
-                    code = '<div class="main-content">\n    <div class="example">\n        <h3>Example</h3>\n        <div class="w3-code">\n            <\!-- start css-block -->\n            <\!-- end css-block -->\n        </div>\n        <a class="btn-link" target="_blank" href="">Try it Yourself >></a>\n    </div>\n</div>';
-                }
-            }   
+                if (currContentType === 1)
+                    code = content ? content: "";
+                else
+                    code = '<div class="main-content">\n    <div class="example">\n        <h3>Example</h3>\n        <div class="w3-code">\n            <\!-- start css-block -->\n            <\!-- end css-block -->\n        </div>\n        <a class="try-it-btn btn-link" target="_blank" href="">Try it Yourself >></a>\n    </div>\n</div>';
+            }
 
             var html = '<div class="w-100" id="Content"><div class="row">'+
-                '<div class="p-1 col-md-6 d-inline-flex justify-content-end"><button onclick="rotate()" class="mr-3 btn btn-success" id="rotate">Rotate <i class="ml-2 fa fa-arrows-alt"></i></button><button id = "runBtn" class="btn btn-success pl-3 pr-3" > Run <i class="pl-2 pr-2 fa fa-chevron-right"></i></button ></div>'+
-                '<div class="p-1 col-md-6 text-right"><button id = "saveBtn" onclick = "saveEdit()" class="pl-3 pr-3 mr-3 btn btn-success" > Save <i class="pl-2 pr-2 fa fa-save"></i></button ></div>'+
-                    '<div class="workspace col-md-6 pr-1">'+
-                        '<textarea class="p-2" name="sourceCode" id="sourceCode">'+code+
-                        '</textarea>'+
-                    '</div>'+
-                    '<div class="workspace col-md-6 pl-1">'+
-                        '<iframe class="p-2"name="targetCode" id="targetCode"></iframe>'+
-                    '</div>'+
-            '</div></div>';
+                '<div class="p-1 col-sm-12">'+
+                    '<div id = "btns" class="ml-md-5">'+
+                        '<button onclick="rotate()" class="btn mr-2" id="rotate">'+
+                            '<img class="img-fluid"src="../image/iconb.png"/>'+
+                        '</button>'+
+                        '<button id="runBtn" class="btn btn-success pl-3 pr-2 mr-2">Run<i class="pl-2 pr-2 fa fa-chevron-right"></i></button>' +
+                        '<button id="saveBtn" onclick="saveEdit()" class="pr-2 mr-2 btn btn-success"> Save <i class="pl-2 pr-2 fa fa-save"></i></button></div>'+
+                    '<div id="framesize" style="">' +
+                    '<span>Result Size:</span>' +
+                '</div>' +
+                    '</div>' +
+
+                '</div>' +
+                '<div class="row">' +
+                    '<div class="workspace col-md-6 pr-md-1 p-1">' +
+                    '<textarea class="p-2" name="sourceCode" id="sourceCode">' + code +
+                    '</textarea>' +
+                    '</div>' +
+                    '<div class="workspace col-md-6 pl-md-1 p-1">' +
+                    '<iframe class="p-2"name="targetCode" id="targetCode"></iframe>' +
+                '</div>' +
+                '</div>'+
+            '</div>';
+
             $("#ctner").html(html);
 
             editor = CodeMirror.fromTextArea($("#sourceCode")[0], {
-                // mode: "simple",
-                //extraKeys: { "Ctrl-Space": "autocomplete" },
-                //theme: "3024-dayv",
-                //smartIndent: true,
-                //value: html,
                 lineNumbers: true,
-                //autoCloseTags: true,
-                //keyMap: "sublime",
-                //scrollbarStyle:"overlay",
             });
             editor.on("change", function (cm) {
                 content = cm.getValue();
@@ -250,11 +280,28 @@
             });
             editor.setSize("100%", "75vh");
 
+            var bUrl = "https://localhost:44322";
+            var header =
+                '<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0" />' +
+                '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>' +
+                '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"><\/script>' +
+                '<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"><\/script>' +
+                '<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"><\/script>' +
+                '<script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"><\/script>' +
+                '<!--front-end-->' +                
+                '<link href="' + bUrl + '/css/site.css" rel="stylesheet"/>' +
+                '<link href="' + bUrl + '/css/base.css" rel="stylesheet"/>' +
+                '<!--font-awesome-->' +
+                '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">';
+
+            iframe = document.getElementById('targetCode');
+            iframe.contentDocument.head.innerHTML = header;
+
             $("#runBtn").click(function () {
-                content = $("#sourceCode").val();
-                iframe = document.getElementById('targetCode');
+                content = $("#sourceCode").val();                
                 runCode();
-            });
+            });           
+            getSize();
         }
     }
 
@@ -305,13 +352,29 @@
             target.removeClass("col-md-12").addClass("col-md-6");
             target.children().css("height", "33rem");
         }
+        getSize();
     }
+
+    function runCode() {
+        iframe = document.getElementById('targetCode');
+        iframe = iframe.contentDocument;
+        //iframe.document.open();
+
+        /*iframe.document.getElementsByTagName('body')[0].innerHTML = content;*/
+        
+        //iframe.document.write(content);
+        //iframe.document.close();
+        iframe.body.innerHTML = content;
+    }
+
     $(function () {
+        window.addEventListener("resize", getSize);
         //render editor
         renderEditor();
         $(".breadcrumb").empty().append('<li class="breadcrumb-item"><span>Home</span></li>'+
             '<li class= "breadcrumb-item active"><a href="/LessonContents/Index">Lesson Content</a></li > ' +
-            '<li class= "breadcrumb-item active"><span>Add & Edit</span></li>');
+            '<li class= "breadcrumb-item active"><span>Add & Edit</span></li>'
+        );        
     });
 
-</script>   
+</script>

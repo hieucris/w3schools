@@ -64,15 +64,12 @@ namespace w3schools.Controllers
         {
             var curUser = sess.GetUserInfo(HttpContext);
 
-            if (curUser != null)
-            {
-                curUser.Token = await ApiClientFactory.Instance.RefeshToken(curUser);
+            curUser.Token = await ApiClientFactory.Instance.RefeshToken(curUser);
 
-                sess.SetUserInfo(curUser, HttpContext);
-                var returns = await ApiClientFactory.Instance.GetListLessonContents("", curUser.Token);
-                return Json(returns);
-            }
-            return BadRequest("Request error");
+            sess.SetUserInfo(curUser, HttpContext);
+
+            var returns = await ApiClientFactory.Instance.GetListLessonContents("", curUser.Token);
+            return Json(returns);
         }
 
         [HttpPost]

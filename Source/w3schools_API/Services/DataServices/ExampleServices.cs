@@ -19,9 +19,9 @@ namespace w3schools_API.Services.DataServices
             basesvc = new BaseServices();
         }
 
-        public async Task<IEnumerable<Example>> GetList(string constr)
+        public async Task<IEnumerable<Example>> GetList(string constr,string filters="")
         {
-            var result = await basesvc.GetList<Example>(table, constr);
+            var result = await basesvc.GetList<Example>(table, constr,filters);
             return result;
         }
 
@@ -46,6 +46,7 @@ namespace w3schools_API.Services.DataServices
                             if (item.type == "update")
                             {
                                 item.data.Content = item.data.Content is not null ? item.data.Content : item.key.Content;
+                                item.data.LessonContentId = item.data.LessonContentId is not null ? item.data.LessonContentId : item.key.LessonContentId;
 
 
                                 basesvc.CommonUpdate(item.data, username, "update");
@@ -54,6 +55,7 @@ namespace w3schools_API.Services.DataServices
                                     item.data.ModifiedBy,
                                     item.data.DateModified,
                                     item.data.Content,
+                                    item.data.LessonContentId,
                                 };
                                 returns += await db.Query(table).Where("ExampleId", item.key.ExampleId).UpdateAsync(obj, transaction);
 
@@ -66,7 +68,8 @@ namespace w3schools_API.Services.DataServices
                                 {
                                     item.data.CreatedBy,
                                     item.data.DateCreated,
-                                    item.data.Content
+                                    item.data.Content,
+                                    item.data.LessonContentId,
                                 };
                                 returns += await db.Query(table).InsertAsync(obj, transaction);
 

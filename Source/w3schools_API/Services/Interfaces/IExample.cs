@@ -8,7 +8,7 @@ namespace w3schools_API.Services.Interfaces
 {
     public interface IExample
     {
-        Task<IEnumerable<Example>> GetList(string constr);
+        Task<IEnumerable<Example>> GetList(string constr,string filters="");
         Task<DataResults<IEnumerable<UpdateBatchData<Example>>>> UpdateBatchMode(string constr, IEnumerable<UpdateBatchData<Example>> data, string username = "");
     }
 }

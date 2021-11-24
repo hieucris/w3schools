@@ -55,7 +55,14 @@
         var target = $("#content-body");
         target.empty();
         data.forEach(function (item, index) {
-            target.append(item.content);
+            var title = item.contentTitle ? item.contentTitle : "";
+            var html = '<div class="text-block">' +
+                '<h2 class="text-title">' + title + '</h2>' + item.content + '</div>';
+           
+            target.append(html);
+            
+            if (item.content.indexOf("try-it-btn") != -1)
+                target.last().find("a.try-it-btn").attr("href", "/Example/ExampleView?id=" + item.lessonContentId);
             if (target.html().length > 0) {
                 if (index < data.length - 1)
                     target.append("<hr>");

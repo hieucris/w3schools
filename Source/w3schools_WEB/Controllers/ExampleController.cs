@@ -28,9 +28,22 @@ namespace w3schools_WEB.Controllers
                 return RedirectToAction("Login", "Auth");
         }
         
-        public IActionResult ExampleView()
+        public async Task<IActionResult> ExampleView(int id= -1)
         {
-            return View();
+            if(id != -1)
+            {
+                var filters = "(LessonContentId =" + id + ")";
+                var curUser = sess.GetUserInfo(HttpContext);
+
+                curUser.Token = await ApiClientFactory.Instance.RefeshToken(curUser);
+
+                sess.SetUserInfo(curUser, HttpContext);
+
+                var returns = await ApiClientFactory.Instance.getListExample(filters,curUser.Token);
+                if(returns.Count == 1)
+                    return View(returns[0]);                
+            }
+            return BadRequest();
         }
 
         [HttpGet]
@@ -43,7 +56,7 @@ namespace w3schools_WEB.Controllers
                 curUser.Token = await ApiClientFactory.Instance.RefeshToken(curUser);
 
                 sess.SetUserInfo(curUser, HttpContext);
-                var returns = await ApiClientFactory.Instance.getListExample(curUser.Token);
+                var returns = await ApiClientFactory.Instance.getListExample("",curUser.Token);
                 return Json(returns);
             }
             return BadRequest("Request error");

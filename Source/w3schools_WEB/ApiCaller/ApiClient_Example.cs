@@ -8,9 +8,9 @@ namespace w3schools_WEB.ApiCaller
 {
     public partial class ApiClient
     {
-        public async Task<List<Example>> getListExample(string token = "")
+        public async Task<List<Example>> getListExample(string filters ="",string token = "")
         {
-            Uri toApi = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Example/GetList"));
+            Uri toApi = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Example/GetList?filters="+filters));
             var results = await GetAsync<List<Example>>(toApi, token);
             return results;
         }

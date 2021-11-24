@@ -25,9 +25,9 @@ namespace w3schools_API.Controllers
 
         [HttpGet]
         //[Authorize]
-        public async Task<IActionResult> GetList()
+        public async Task<IActionResult> GetList(string filters="")
         {
-            var results = await services.GetList(constr);
+            var results = await services.GetList(constr,filters);
             return Ok(results);
         }
 

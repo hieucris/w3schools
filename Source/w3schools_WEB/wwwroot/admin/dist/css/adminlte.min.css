@@ -48892,14 +48892,4 @@ a.text-muted:hover {
 .breadcrumb {
     background-color: #f4f6f9;
 }
-/* live code editor*/
-#sourceCode, #targetCode {
-    border: 2px solid #ddd;
-    height: 75vh;
-    width: 100%;
-}
 
-#sourceCode {
-    resize: none !important;
-}
-/* end */
