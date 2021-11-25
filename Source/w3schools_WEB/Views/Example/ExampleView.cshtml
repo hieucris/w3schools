@@ -110,9 +110,10 @@
 <script>
     const data = @Html.Raw(JsonConvert.SerializeObject(Model));
     var content = data.Content;
-    $("#sourceCode").html(content);
-    var iframe = document.getElementById('targetCode');
+    $("#sourceCode").text(content);
+    var iframe;
     function getSize() {
+        iframe = document.getElementById('targetCode');
         $("#framesize").find("span").text("Result Size: " + iframe.contentWindow.innerWidth + " x " + iframe.contentWindow.innerHeight);
     }
     function renderEditor() {
@@ -150,8 +151,7 @@
         iframe = document.getElementById('targetCode');
         iframe.contentDocument.head.innerHTML = header;
         $("#runBtn").click(function () {
-            content = $("#sourceCode").val();
-            iframe = document.getElementById('targetCode');
+            content = $("#sourceCode").val();            
             runCode();
         });
 

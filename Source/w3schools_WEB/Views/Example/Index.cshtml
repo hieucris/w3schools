@@ -51,7 +51,7 @@
             $.ajax({
                 "async": true,
                 "crossDomain": true,
-                "url": "@Url.Action("GetListLessContent", "LessonContents")",
+                "url": "@Url.Action("GetListLessContent", "LessonContents")?filt=true",
                 "headers": {
                     "Content-Type": "application/json",
                     "cache-control": "no-cache"

@@ -84,7 +84,7 @@
     var currContentType = data.ContentTypeId;
     var editor;
     var content="";
-    var iframe = document.getElementById('targetCode');
+    var iframe;
     var method = @Html.Raw(JsonConvert.SerializeObject(meth));
     var order = @Html.Raw(JsonConvert.SerializeObject(rOrder));
 
@@ -189,6 +189,7 @@
     }).dxSelectBox("instance");
 
     function getSize() {
+        iframe = document.getElementById('targetCode');
         $("#framesize").find("span").text("Result Size: " + iframe.contentWindow.innerWidth + " x " + iframe.contentWindow.innerHeight);
     }
 

@@ -60,15 +60,16 @@ namespace w3schools.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetListLessContent()
+        public async Task<IActionResult> GetListLessContent(bool filt= false)
         {
             var curUser = sess.GetUserInfo(HttpContext);
 
+            var filters = filt? "(ContentTypeId =" +(int) ContentTypeEnum.Example + ")": "";
             curUser.Token = await ApiClientFactory.Instance.RefeshToken(curUser);
 
             sess.SetUserInfo(curUser, HttpContext);
 
-            var returns = await ApiClientFactory.Instance.GetListLessonContents("", curUser.Token);
+            var returns = await ApiClientFactory.Instance.GetListLessonContents(filters, curUser.Token);
             return Json(returns);
         }
 
