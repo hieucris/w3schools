@@ -10,65 +10,99 @@
 }
 /* end */
 
-/*main css*/
 .app {
 }
 
-.app .header {
-    position: fixed;
-    width: 100%;
-    z-index: 10;
+    .app .header {
+        position: fixed;
+        width: 100%;
+        z-index: 10;
+    }
+
+        .app .header .navbar {
+        }
+
+            .app .header .navbar .navbar-branch {
+                margin-left: 50px;
+            }
+
+            .app .header .navbar .nav-menu {
+                margin-left: 80px;
+            }
+
+            .app .header .navbar .navbar-branch img {
+            }
+
+            .app .header .navbar .nav {
+            }
+
+                .app .header .navbar .nav .nav-item {
+                }
+
+                    .app .header .navbar .nav .nav-item:hover .nav-link {
+                        color: var(--white-color);
+                        background: var(--green-color);
+                    }
+
+                .app .header .navbar .nav .nav-link {
+                    padding: 20px;
+                    font-size: 1.8rem;
+                    color: var(--black-color);
+                    transition: all 0.4s ease 0s;
+                }
+
+                    .app .header .navbar .nav .nav-link.active {
+                    }
+
+            .app .header .navbar form {
+            }
+
+            .app .header .navbar input.search-input {
+                width: 200px;
+                height: 30px;
+                font-size: 1.4rem;
+                padding: 10px;
+            }
+
+.account {
+    display: flex;
+    margin-right: 30px;
 }
 
-.app .header .navbar {
-}
+    .account a {
+        font-size: 1.6rem;
+        color: var(--white-color);
+        background: var(--green-color);
+        padding: 8px 15px;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: 0.4s;
+        display: block;
+    }
 
-.app .header .navbar .navbar-branch {
-    margin-left: 50px;
-}
+    .account .register {
+        margin: 0 5px;
+    }
 
-.app .header .navbar .nav-menu {
-    margin-left: 150px;
-}
+    .account .login {
+        margin: 0 5px;
+    }
 
-.app .header .navbar .navbar-branch img {
-}
+    .account .register:hover a {
+        background: var(--green-color);
+        color: var(--white-color);
+    }
 
-.app .header .navbar .nav {
-}
-
-.app .header .navbar .nav .nav-item {
-}
-
-.app .header .navbar .nav .nav-item:hover .nav-link {
-    color: var(--white-color);
-    background: var(--green-color);
-}
-
-.app .header .navbar .nav .nav-link {
-    padding: 20px;
-    /*font-size: 1.4rem;*/
-    font-size: 1rem;
-    color: var(--black-color);
-    transition: all 0.4s ease 0s;
-}
-
-.app .header .navbar .nav .nav-link.active {
-}
-
-.app .header .navbar form {
-    margin-right: 50px;
-}
-
-.app .header .navbar input.search-input {
-    width: 200px;
-    height: 30px;
-    font-size: 1.4rem;
-    padding: 10px;
-}
+    .account .register a {
+        background: transparent;
+        color: var(--black-color);
+    }
 
 button.btn-search {
-    /*height: 30px;*/
+    height: 30px;
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
 }
 
 .app .header .navbar .btn-group {
@@ -80,9 +114,10 @@ button.btn-search {
     }
 
     .app .header .navbar .btn-group .btn-language {
-        font-size: 1rem;
-        /*font-size: 1.4rem;*/
-        width: 10rem;
+        font-size: 1.8rem;
+        width: 12rem;
+        display: flex;
+        align-items: center;
     }
 
     .app .header .navbar .btn-group .dropdown-menu {
@@ -118,6 +153,7 @@ button.btn-search {
 
 .sidebar .sidebar-list {
     width: 100%;
+    padding: 0;
 }
 
     .sidebar .sidebar-list .sidebar-item {
@@ -133,20 +169,19 @@ button.btn-search {
             background: var(--green-color);
         }
 
-.sidebar .sidebar-list .sidebar-item.active a {
-    background: var(--green-color);
-    color: var(--white-color);
-}
+            .sidebar .sidebar-list .sidebar-item.active a {
+                background: var(--green-color);
+                color: var(--white-color);
+            }
 
-.sidebar .sidebar-list .sidebar-item .sidebar-link {
-display: block;
-font-size: 1.1rem;
-/*font-size: 1.6rem;*/
-padding: 10px 27px;
-text-decoration: none;
-color: var(--text-color);
-transition: all 0.4s ease 0s;
-}
+        .sidebar .sidebar-list .sidebar-item .sidebar-link {
+            display: block;
+            font-size: 1.6rem;
+            padding: 10px 27px;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.4s ease 0s;
+        }
 
 .main .content .main-content {
     margin-top: 60px;
@@ -155,6 +190,7 @@ transition: all 0.4s ease 0s;
 
 .main-content .content-title {
     font-size: 4.2rem;
+    font-weight: 400;
 }
 
 .btn-prevnext {
@@ -168,8 +204,7 @@ transition: all 0.4s ease 0s;
     background: var(--green-color);
     color: var(--white-color);
     border-radius: 5px;
-    /*font-size: 1.8rem;*/
-    font-size: 1rem;
+    font-size: 1.8rem;
 }
 
 .btn-prevnext .btn-link.btn-prev {
@@ -210,29 +245,39 @@ a.btn-link {
     margin: 20px 0px;
 }
 
-.main-content p {
-    font-size: 1.5rem;
+.main-content p span {
+    font-size: 1.5rem !important;
     margin: 15px 0px;
 }
 
-.example {
+.main-content .example {
     background: rgb(231, 233, 235);
     padding: 40px 20px;
     border-radius: 10px;
     margin: 10px 0;
 }
 
-    .main-content .example h3 {
-        font-size: 3rem;
-        margin-bottom: 20px;
-    }
-    /* .main-content .example pre {
+.w3-info > .w3-btn {
+    color: var(--white-color);
+    background: var(--green-color);
+    padding: 15px 20px !important;
+    border-radius: 7px !important;
+    margin: 15px 0px !important;
+    font-size: 1.5rem !important;
+    display: inline-block;
+}
+
+.main-content .example h3 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+/* .main-content .example pre {
   background: var(--white-color);
   padding: 20px 0px;
   font-size: 1.4rem;
   border-left: 5px solid var(--green-color);
 } */
-    /* .main-content .example a.try {
+/* .main-content .example a.try {
   padding: 10px 20px;
   background: var(--green-color);
   color: var(--white-color);
@@ -242,12 +287,12 @@ a.btn-link {
   width: 170px;
   font-size: 1.5rem;
 } */
-    .main-content .example .w3-code {
-        font-size: 1.6rem;
-        padding: 30px;
-        background: var(--white-color);
-        border-left: 5px solid var(--green-color);
-    }
+.main-content .example .w3-code {
+    font-size: 1.6rem;
+    padding: 30px;
+    background: var(--white-color);
+    border-left: 5px solid var(--green-color);
+}
 
 .w3-code span.css-selector-color {
     line-height: 1.5;
@@ -276,6 +321,34 @@ a.text-link {
     display: block;
     line-height: 3rem;
 }
+
+footer.footer {
+    text-align: center;
+    margin-top: 40px;
+}
+
+    footer.footer p.w3-decription {
+        line-height: 30px;
+        font-size: 1.3rem;
+        font-weight: 100;
+        opacity: 0.7;
+    }
+
+    footer.footer p.w3-copyright {
+        line-height: 20px;
+        opacity: 0.7;
+    }
+
+    footer.footer a.logo-link {
+        display: block;
+        width: 100px;
+        height: 100px;
+        margin: auto;
+    }
+
+        footer.footer a.logo-link img {
+            width: 100%;
+        }
 
 /*end*/
 /*for admin page*/
