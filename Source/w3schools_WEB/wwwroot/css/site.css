@@ -356,3 +356,13 @@ footer.footer {
     height: 0px !important;
 }
 /*end*/
+h5, #framesize {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 1.2rem;
+}
+.dx-texteditor-input{
+    font-size: 1.3rem;
+}
+button, input, optgroup, select, textarea {
+    font-family: 'Source Sans Pro', sans-serif;
+}

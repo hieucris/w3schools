@@ -3,8 +3,9 @@
 }
 
 <script>
+    let curr;
     let listLesson = [];
-    let listContent = []
+    let listContent = [];
 
     function renderSibar() {
         $(".sidebar-list").empty();
@@ -12,43 +13,51 @@
             $(".sidebar-list").append('<li class="sidebar-item"><a href="#" onclick="return getContent('+item.lessonId+')" class="sidebar-link">'+item.lessonName +'</a></li>');
         });
     }
-    function getContent(id) {
-        
+
+    function getContent(id) { 
+        curr = id;
         $.ajax({
-                "async": true,
-                "crossDomain": true,
-                "url": "@Url.Action("RenderContents", "Home")?id="+id,
-                "headers": {
-                    "Content-Type": "application/json",
-                    "cache-control": "no-cache"
-                },
-                "method": "GET"
+            "async": true,
+            "crossDomain": true,
+            "url": "@Url.Action("RenderContents", "Home")?id="+id,
+            "headers": {
+                "Content-Type": "application/json",
+                "cache-control": "no-cache"
+            },
+            "method": "GET"
         }).done(function (result) {
-                renderContent(result,id);
-                
-            }).fail(function (xhr) {
-                console.log("get contents failed");
-            });
+             renderContent(result,id);                
+        }).fail(function (xhr) {
+            console.log("get contents failed");
+        });
+        //add active class
+        if ($(".sidebar-list").find("li.active").length > 0) 
+            $(".sidebar-list").find("li.active").removeClass("active");         
+        let index = listLesson.findIndex(x => x.lessonId == id);
+        $(".sidebar-list").children()[index].classList.add("active");
+        
         return false;
     }
+
     function getListLesson() {
         $.ajax({
-                "async": true,
-                "crossDomain": true,
-                "url": "@Url.Action("GetListLesson", "Lesson")",
-                "headers": {
-                    "Content-Type": "application/json",
-                    "cache-control": "no-cache"
-                },
-                "method": "GET"
+            "async": true,
+            "crossDomain": true,
+            "url": "@Url.Action("GetListLesson", "Lesson")",
+            "headers": {
+                "Content-Type": "application/json",
+                "cache-control": "no-cache"
+            },
+            "method": "GET"
         }).done(function (result) {
-                listLesson = result;
+            listLesson = result;
             renderSibar(); 
             getContent(listLesson[0].lessonId);
-            }).fail(function (xhr) {
-                console.log("get lesson list failed");
+        }).fail(function (xhr) {
+            console.log("get lesson list failed");
         });
     }
+
     function renderContent(data, id) {
         var lessonName = (listLesson.filter(x => x.lessonId == id))[0].lessonName;
         $(".content-title").text(lessonName);
@@ -69,10 +78,23 @@
             }
         })
     }
-    $(function () {
 
-        getListLesson();        
-    })
+    function prevOrNext(type){        
+        let currIndex = listLesson.findIndex(x => x.lessonId == curr);
+        let index = type === 0 ? (currIndex > 0 ? currIndex - 1 : 0) : (type === 1 ? currIndex === listLesson.length - 1 ? currIndex : currIndex + 1 : 0);
+        getContent(listLesson[index].lessonId);
+    }
+    $(".btn-next").on("click", function (e) {
+        e.preventDefault();
+        prevOrNext(1);
+    });
+    $(".btn-prev").on("click", function (e) {
+        e.preventDefault();
+        prevOrNext(0);
+    });
+    
+    getListLesson();          
+    
 </script>
 
 
