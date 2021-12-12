@@ -24,7 +24,7 @@ namespace w3schools_API.Controllers
         }
 
         [HttpGet]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> GetList(string filters="")
         {
             var results = await services.GetList(constr,filters);
@@ -32,7 +32,7 @@ namespace w3schools_API.Controllers
         }
 
         [HttpPost]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Update(IEnumerable<UpdateBatchData<Example>> data, string username = "admin")
         {
             var result = await services.UpdateBatchMode(constr, data, username);

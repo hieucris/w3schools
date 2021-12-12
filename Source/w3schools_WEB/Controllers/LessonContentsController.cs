@@ -63,14 +63,19 @@ namespace w3schools.Controllers
         public async Task<IActionResult> GetListLessContent(bool filt= false)
         {
             var curUser = sess.GetUserInfo(HttpContext);
+            if (curUser != null)
+            {
+                UserInfo info = new UserInfo("DefaultSessionForNotLoginUsers", "", "");
+                curUser = sess.SetUserInfo(info, HttpContext) ? sess.GetUserInfo(HttpContext) : curUser;
+                var filters = filt ? "(ContentTypeId =" + (int)ContentTypeEnum.Example + ")" : "";
+                curUser.Token = await ApiClientFactory.Instance.RefeshToken(curUser);
 
-            var filters = filt? "(ContentTypeId =" +(int) ContentTypeEnum.Example + ")": "";
-            curUser.Token = await ApiClientFactory.Instance.RefeshToken(curUser);
+                sess.SetUserInfo(curUser, HttpContext);
 
-            sess.SetUserInfo(curUser, HttpContext);
-
-            var returns = await ApiClientFactory.Instance.GetListLessonContents(filters, curUser.Token);
-            return Json(returns);
+                var returns = await ApiClientFactory.Instance.GetListLessonContents(filters, curUser.Token);
+                return Json(returns);
+            }
+            return BadRequest("Request error");
         }
 
         [HttpPost]

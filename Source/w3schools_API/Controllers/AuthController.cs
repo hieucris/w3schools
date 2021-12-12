@@ -22,22 +22,22 @@ namespace w3schools_API.Controllers
             this.ser = ser;
             constr = config.GetConnectionString("CN");
         }
-        [HttpGet]
-        public async Task<IActionResult> CheckLogin(string email, string password)
+        [HttpPost]
+        public async Task<IActionResult> CheckLogin(Users u)
         {
-            if (string.IsNullOrEmpty(email))
+            if (string.IsNullOrEmpty(u.Email))
             {
                 ModelState.AddModelError("Email", "Email is required");
             }
 
-            if (string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(u.PassWord))
             {
                 ModelState.AddModelError("PassWord", "PassWord is required");
             }
 
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var rs = await ser.CheckLogin(email, password,constr);
+            var rs = await ser.CheckLogin(u.Email, u.PassWord,constr);
 
             return Ok(rs);
         }

@@ -24,6 +24,7 @@ namespace w3schools_API.Controllers
         }
         
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetList(string filters)
         {
             var results = await services.GetList(constr,filters);
@@ -38,7 +39,7 @@ namespace w3schools_API.Controllers
         }
         
         [HttpDelete]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             var results = await services.Delete(constr, id);
@@ -46,7 +47,7 @@ namespace w3schools_API.Controllers
         }
         
         [HttpPost]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Update(LessonContents data)
         {
             
@@ -55,7 +56,7 @@ namespace w3schools_API.Controllers
         }
         
         [HttpPost]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Insert(LessonContents data)
         {
             var results = await services.Insert(data,constr);

@@ -36,6 +36,8 @@ namespace w3schools_WEB.Controllers
 
             if (curUser != null)
             {
+                UserInfo info = new UserInfo("DefaultSessionForNotLoginUsers", "", "");
+                curUser = sess.SetUserInfo(info, HttpContext) ? sess.GetUserInfo(HttpContext) : curUser;
                 curUser.Token = await ApiClientFactory.Instance.RefeshToken(curUser);
 
                 sess.SetUserInfo(curUser, HttpContext);

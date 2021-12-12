@@ -21,8 +21,7 @@ namespace w3schools_WEB.ApiCaller
         
         public async Task<DataResults<IEnumerable<UpdateBatchData<Lessons>>>> updateBatchLesson( IEnumerable<UpdateBatchData<Lessons>> data, string user= "Administrator", string token="")
         {
-            
-            
+
             Uri toApi = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Lessons/Update?username=" + user));
             var results = await NewPostAsync<IEnumerable<UpdateBatchData<Lessons>>>(toApi, data,token);
             return results;

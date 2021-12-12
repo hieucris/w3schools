@@ -21,21 +21,21 @@ namespace w3schools_API.Controllers
             this.services = services;
             constr = config.GetConnectionString("CN");
         }
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetList()
         {
             var results = await services.GetList(constr);
             return Ok(results);
         }
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
             var results = await services.Delete(constr, id);
             return Ok(results);
         }
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Update(Users data, string username = "")
         {
@@ -43,7 +43,7 @@ namespace w3schools_API.Controllers
             var results = await services.Update(data, constr);
             return Ok(results);
         }
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Insert(Users data, string username = "")
         {

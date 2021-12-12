@@ -34,13 +34,18 @@ namespace w3schools_WEB.Controllers
         public async Task<IActionResult> GetListLesson()
         {            
             var curUser= sess.GetUserInfo(HttpContext);
+            if (curUser != null)
+            {
+                UserInfo info = new UserInfo("User", "", "");
+                curUser = sess.SetUserInfo(info, HttpContext) ? sess.GetUserInfo(HttpContext) : curUser;
+                curUser.Token = await ApiClientFactory.Instance.RefeshToken(curUser);
 
-            curUser.Token = await ApiClientFactory.Instance.RefeshToken(curUser);
+                sess.SetUserInfo(curUser, HttpContext);
 
-            sess.SetUserInfo(curUser, HttpContext);
-
-            var returns = await ApiClientFactory.Instance.getListLesson(curUser.Token);
-            return Json(returns);            
+                var returns = await ApiClientFactory.Instance.getListLesson(curUser.Token);
+                return Json(returns);
+            }
+            return BadRequest();
         }
         [HttpPost]
         public async Task<IActionResult> UpdateBatchLesson([FromBody]IEnumerable<UpdateBatchData<Lessons>> data)

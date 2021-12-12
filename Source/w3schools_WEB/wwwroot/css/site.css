@@ -1,4 +1,5 @@
-﻿/* live code editor*/
+﻿
+/* live code editor*/
 #sourceCode, #targetCode {
     border: 2px solid #ddd;
     height: 75vh;
@@ -103,6 +104,7 @@ button.btn-search {
     font-size: 1.8rem;
     display: flex;
     align-items: center;
+    background-color: var(--green-color);
 }
 
 .app .header .navbar .btn-group {
@@ -156,36 +158,55 @@ button.btn-search {
     padding: 0;
 }
 
-    .sidebar .sidebar-list .sidebar-item {
-        width: 100%;
-        transition: all 0.4s ease 0s;
+ul.sidebar-list .sidebar-item:nth-child(1) {
+}
+
+.sidebar .sidebar-list .sidebar-item {
+    width: 100%;
+    transition: all 0.4s ease 0s;
+    padding: 3px;
+}
+
+    .sidebar .sidebar-list .sidebar-item:hover {
+        background: var(--sidebar-hover);
     }
 
-        .sidebar .sidebar-list .sidebar-item:hover {
-            background: var(--sidebar-hover);
-        }
+    .sidebar .sidebar-list .sidebar-item.active {
+        background: var(--green-color);
+    }
 
-        .sidebar .sidebar-list .sidebar-item.active {
+        .sidebar .sidebar-list .sidebar-item.active a {
             background: var(--green-color);
+            color: var(--white-color);
         }
 
-            .sidebar .sidebar-list .sidebar-item.active a {
-                background: var(--green-color);
-                color: var(--white-color);
-            }
+    .sidebar .sidebar-list .sidebar-item .sidebar-link {
+        display: block;
+        font-size: 1.6rem;
+        padding: 0px 27px;
+        text-decoration: none;
+        color: var(--text-color);
+        transition: all 0.4s ease 0s;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+        height: 1.8rem;
+        margin: 6px 0;
+    }
 
-        .sidebar .sidebar-list .sidebar-item .sidebar-link {
-            display: block;
-            font-size: 1.6rem;
-            padding: 10px 27px;
-            text-decoration: none;
-            color: var(--text-color);
-            transition: all 0.4s ease 0s;
-        }
+ul.sidebar-list .sidebar-item:nth-child(1) > h1.sidebar-link {
+    font-size: 2rem !important;
+    height: 25px;
+}
 
 .main .content .main-content {
-    margin-top: 60px;
-    padding: 50px 20px;
+    /* margin-top: 60px; */
+    padding: 10px 0px;
+}
+
+.main-content font {
+    font-size: 1.4rem;
 }
 
 .main-content .content-title {
@@ -238,6 +259,7 @@ a.btn-link {
     margin: 15px 0px;
     font-size: 1.5rem;
     display: inline-block;
+    transition: 0.4s;
 }
 
 .main-content h2 {
@@ -252,7 +274,7 @@ a.btn-link {
 
 .main-content .example {
     background: rgb(231, 233, 235);
-    padding: 40px 20px;
+    padding: 10px 20px;
     border-radius: 10px;
     margin: 10px 0;
 }
@@ -314,6 +336,29 @@ b {
     margin: 40px 0;
 }
 
+    .text-block div {
+        margin: 15px 0;
+    }
+
+    .text-block p {
+        margin: 10px 0;
+    }
+
+        .text-block p a {
+            font-size: 1.6rem;
+            color: var(--text-color);
+            text-decoration: underline;
+            display: block;
+            line-height: 3rem;
+            padding: 0 !important;
+        }
+
+    .text-block > p {
+        font-size: 1.5rem;
+        font-weight: 500;
+        opacity: .9;
+    }
+
 a.text-link {
     font-size: 1.6rem;
     color: var(--text-color);
@@ -329,7 +374,7 @@ footer.footer {
 
     footer.footer p.w3-decription {
         line-height: 30px;
-        font-size: 1.3rem;
+        font-size: 1.6rem;
         font-weight: 100;
         opacity: 0.7;
     }
@@ -337,6 +382,7 @@ footer.footer {
     footer.footer p.w3-copyright {
         line-height: 20px;
         opacity: 0.7;
+        font-size: 1.4rem;
     }
 
     footer.footer a.logo-link {
@@ -355,14 +401,17 @@ footer.footer {
 #listData .dx-toolbar .dx-toolbar-items-container {
     height: 0px !important;
 }
-/*end*/
+
 h5, #framesize {
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 1.2rem;
 }
-.dx-texteditor-input{
+
+.dx-texteditor-input {
     font-size: 1.3rem;
 }
+
 button, input, optgroup, select, textarea {
     font-family: 'Source Sans Pro', sans-serif;
 }
+/*end*/

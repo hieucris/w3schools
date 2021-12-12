@@ -8,12 +8,12 @@ namespace w3schools_WEB.ApiCaller
 {
     public partial class ApiClient
     {
-        public async Task<DataResults<UserInfo>> checkLogin(string email, string password)
+        public async Task<DataResults<UserInfo>> checkLogin(Users data)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                "Auth/CheckLogin?email="+email+"&password="+password));
+                "Auth/CheckLogin"));
 
-            var x = await GetAsync<DataResults<UserInfo>>(requestUrl);
+            var x = await NewPostAsync2Para<UserInfo,Users>(requestUrl,data);
 
             return x;
         }

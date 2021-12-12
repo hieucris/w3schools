@@ -26,11 +26,18 @@
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" name="password" id="PassWord" placeholder="Password">
+                    <div class="position-relative d-flex align-items-center">
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                        <span class="eye"><i id="" class="togglePassword fas fa-eye"></i></span>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="rePassword">Re-enter Password</label>
-                    <input type="password" class="form-control" name="rePassword" id="RePassWord" placeholder="Re-enter Password">
+                    <div class="position-relative d-flex align-items-center">
+                        <input type="password" class="form-control" name="rePassWord" id="RePassWord" placeholder="Re-enter Password">
+                        <span class="eye"><i id="" class="fas fa-eye togglePassword"></i></span>
+                    </div>
+                    
                 </div>
                 <div class="form-group">                    
                     <div id="err" style="display:none" class="text-danger">
@@ -45,6 +52,11 @@
     </div>
 </div>
 <style>
+.eye {
+    cursor: pointer;
+    position: absolute;
+    right: 2rem;
+}
 #box {
     position: absolute;
     top: 50%;
@@ -122,6 +134,16 @@
         
     })
     })
-
+    const togglePassword = document.querySelectorAll('.togglePassword');   
+    
+    togglePassword.forEach(x => x.addEventListener('click', function (e) {
+        // toggle the type attribute
+        let parent = x.parentNode.previousElementSibling;
+        const type = parent.getAttribute('type') === 'password' ? 'text' : 'password';
+        parent.setAttribute('type', type);
+        // toggle the eye / eye slash icon
+        x.classList.toggle('fa-eye-slash');
+    })
+    );
 
 </script>

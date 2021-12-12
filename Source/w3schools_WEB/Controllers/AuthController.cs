@@ -31,6 +31,7 @@ namespace w3schools_WEB.Controllers
                 }
                 else
                 {
+                    data.Email = data.Email.ToLower().Trim();
                     string emailRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
                                         @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
                                         @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
@@ -46,7 +47,7 @@ namespace w3schools_WEB.Controllers
                     return Ok(rt);
             }
 
-            var rs = await ApiClientFactory.Instance.checkLogin(data.Email, data.PassWord);
+            var rs = await ApiClientFactory.Instance.checkLogin(data);
 
             if (rs.Status == 1)
             {
@@ -73,6 +74,28 @@ namespace w3schools_WEB.Controllers
             return View("Login");
         }
 
+        [HttpGet]
+        public IActionResult SignoutWithAjax()
+        {
+            var rt = new DataResults<int>();
+            var sess = new Session();
+            var curUser = sess.GetUserInfo(HttpContext);
+
+            if (curUser != null)
+            {
+                var session = HttpContext.Session;
+                sess.ClearSection(session);
+                rt.Message = "Successfuly";
+                rt.Status = 1;
+            }
+            else
+            {
+                rt.Message = "Failed";
+                rt.Status = -1;
+            }
+            return Ok(rt);
+        }
+
         [HttpPost]
         public async Task<IActionResult> SignupMethod(SingupModel data)
         {
@@ -89,6 +112,7 @@ namespace w3schools_WEB.Controllers
                 }
                 else
                 {
+                    data.Email = data.Email.ToLower().Trim();
                     string emailRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
                                         @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
                                         @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
@@ -106,7 +130,8 @@ namespace w3schools_WEB.Controllers
                     rt.Message += "Re-enter password is not match!";
                 }
                 else
-                {                    
+                {
+                    data.PassWord = data.PassWord.Trim();
                     var hasNumber = new Regex(@"[0-9]+");
                     var hasUpperChar = new Regex(@"[A-Z]+");
                     var hasMinimum8Chars = new Regex(@".{8,}");

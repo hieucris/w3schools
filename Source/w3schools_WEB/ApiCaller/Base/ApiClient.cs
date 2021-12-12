@@ -11,6 +11,7 @@ using Newtonsoft.Json.Linq;
 using w3schools_API.Models;
 using w3schools_WEB.Models;
 using System.Text.Json;
+using System.Net;
 
 namespace w3schools_WEB.ApiCaller
 {
@@ -46,11 +47,8 @@ namespace w3schools_WEB.ApiCaller
         {
             if (!string.IsNullOrEmpty(accessToken))
             {
-                //_httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                //_httpClient.DefaultRequestHeaders.ConnectionClose = true;
-                //_httpClient.DefaultRequestHeaders.Remove("Authorization");
-                //_httpClient.DefaultRequestHeaders.Add("Authorization",accessToken);
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                _httpClient.DefaultRequestHeaders.Remove("Authorization");
+                _httpClient.DefaultRequestHeaders.Add("Authorization", accessToken);
             }
         }
 
@@ -89,10 +87,22 @@ namespace w3schools_WEB.ApiCaller
 
         private async Task<T> GetAsync<T>(Uri requestUrl, string token = "")
         {
-            AddHeaders(token);
-           
+            AddHeaders(token);           
             var response = await _httpClient.GetAsync(requestUrl, HttpCompletionOption.ResponseHeadersRead);
             response.EnsureSuccessStatusCode();
+            //if (response.StatusCode == HttpStatusCode.Unauthorized)
+            //{
+            //    // Authorization header has been set, but the server reports that it is missing.
+            //    // It was probably stripped out due to a redirect.
+
+            //    var finalRequestUri = response.RequestMessage.RequestUri; // contains the final location after following the redirect.
+
+            //    if (finalRequestUri != requestUrl) // detect that a redirect actually did occur.
+            //    {
+            //        // If this is public facing, add tests here to determine if Url should be trusted
+            //        response = await _httpClient.GetAsync(finalRequestUri);
+            //    }
+            //}
             var data = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<T>(data, new JsonSerializerOptions
             {
@@ -107,6 +117,18 @@ namespace w3schools_WEB.ApiCaller
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
             var returns = JsonSerializer.Deserialize<DataResults<T>>(data, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+            return returns;
+        }
+        private async Task<DataResults<T1>> NewPostAsync2Para<T1,T2>(Uri requestUrl, T2 content, string token = "")
+        {
+            AddHeaders(token);
+            var response = await _httpClient.PostAsync(requestUrl.ToString(), CreateHttpContent<T2>(content));
+            response.EnsureSuccessStatusCode();
+            var data = await response.Content.ReadAsStringAsync();
+            var returns = JsonSerializer.Deserialize<DataResults<T1>>(data, new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });

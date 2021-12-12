@@ -45,6 +45,7 @@ namespace w3schools_API.Services.DataServices
                     if (rs is not null)
                     {
                         bool validPassword = BCrypt.Net.BCrypt.Verify(password, rs.PassWord);
+                        //bool validPassword = rs.PassWord == password;
                         if (validPassword)
                         {
                             dataReturn.Data = rs;
@@ -96,7 +97,7 @@ namespace w3schools_API.Services.DataServices
                     
                     if (checkExisted == null)
                     {
-                        data.PassWord = BCrypt.Net.BCrypt.HashPassword(data.PassWord);
+                        //data.PassWord = BCrypt.Net.BCrypt.HashPassword(data.PassWord);
                         var rs = await userSv.Insert(data, constr);
                         if (rs.Status == 1) {
                             enumData = await

@@ -21,7 +21,9 @@ namespace w3schools_WEB.Controllers
             sess = new Session();
         }
         public IActionResult Index()
-        {            
+        {
+            var curUser = sess.GetUserInfo(HttpContext);
+            ViewBag.Username = curUser.UserName;
             return View();                   
         }
         public async Task<IActionResult> RenderContents(int id = -1)

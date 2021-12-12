@@ -24,7 +24,7 @@ namespace w3schools_API.Controllers
             constr = config.GetConnectionString("CN");
         }        
         [HttpGet]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> GetList()
         {
             var results = await services.GetList(constr);
@@ -32,7 +32,7 @@ namespace w3schools_API.Controllers
         }
         
         [HttpPost]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Update(IEnumerable<UpdateBatchData<ContentTypes>> data, string username = "admin")
         {
             var result = await services.UpdateBatchMode(constr, data, username);

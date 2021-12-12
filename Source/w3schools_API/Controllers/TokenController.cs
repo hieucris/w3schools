@@ -28,21 +28,21 @@ namespace w3schools_API.Controllers
         [HttpGet]
         public IActionResult GetToken( string u,string p )
         {
-            //string accessToken = "Bearer ";
-            string accessToken="";
+            string accessToken = "Bearer ";
+            //string accessToken="";
 
             int expiresTime = _config.GetValue<int>("AuthorizeSettings:expires");
 
             if (CheckLogin(u,p))
             {
                 var token = new Token();                
-                accessToken = token.GenerateJsonWebToken(u,_config, expiresTime);
+                accessToken += token.GenerateJsonWebToken(u,_config, expiresTime);
 
             }
 
             return Ok(accessToken);
         }
-        //[Authorize]
+        [Authorize]
         [HttpGet]        
         public IActionResult CheckToken()
         {

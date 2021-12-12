@@ -21,8 +21,11 @@
                 </div>
                 <div class="form-group">
                     <label for="pw">Password</label>
-                    <input type="password" class="form-control" name="password" id="password" placeholder="Password">
-                </div>
+                    <div class="position-relative d-flex align-items-center">
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                        <span class="eye"><i id="togglePassword" class="fas fa-eye"></i></span>
+                    </div> 
+                </div>            
                 <div class="form-group">
                     <div id="err" style="display:none" class="text-danger">
 
@@ -36,6 +39,11 @@
     </div>
 </div>
 <style>
+    .eye {        
+        cursor: pointer;        
+        position:absolute;
+        right:2rem;
+    }
     #box {        
         position: absolute;
         top: 50%;
@@ -106,8 +114,17 @@
             DevExpress.ui.notify("Error","warning", 5000);
         })
 
+        })
     })
-    })
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#password');
+    togglePassword.addEventListener('click', function (e) {
+        // toggle the type attribute
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        // toggle the eye / eye slash icon
+        this.classList.toggle('fa-eye-slash');
+    });
 
 
 </script>
