@@ -17,6 +17,12 @@
     </div>
 </div>
 <script>
+    //add active class
+    let list = $("#sidebar").find("ul>li>a>span");
+    list.toArray().forEach(function (item, index) {
+        if (item.innerHTML === "Lesson")
+            item.parentElement.classList.add("active");
+    })
     var listCates = new DevExpress.data.CustomStore({
         key: "lessonCateId",
         loadMode:"raw",

@@ -17,6 +17,12 @@
     </div>
 </div>
 <script>
+    //add active class
+    let list = $("#sidebar").find("ul>li>a>span");
+    list.toArray().forEach(function (item, index) {
+        if (item.innerHTML === "Lesson Category")
+            item.parentElement.classList.add("active");
+    })
     var table = "LessonCategories";
 
     var columns = [{

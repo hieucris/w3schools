@@ -52,6 +52,8 @@
                 }
 
                     .app .header .navbar .nav .nav-link.active {
+                        background: var(--green-color);
+                        color: var(--white-color);
                     }
 
             .app .header .navbar form {

@@ -56,7 +56,6 @@
         right: 2rem;
         top: 20%
     }
-
     #rotate {
         border: unset;
         padding: 0 0;
@@ -196,7 +195,8 @@
         $("#framesize").find("span").text("Result Size: " + iframe.contentWindow.innerWidth + " x " + iframe.contentWindow.innerHeight);
     }
 
-    function renderEditor(){
+    function renderEditor() {
+        //plaintext
         if (currContentType === 2) {
             $("#htmlSaveBtn").html('<button id = "saveBtn" onclick = "saveEdit()"  class="pl-3 pr-3 mr-3 btn btn-success" > Save <i class="pl-2 pr-2 fa fa-save"></i></button >');
             $("#ctner").html('<div style="background-color:#fff" class="m-4" id="Content">')
@@ -236,16 +236,13 @@
         } else if (currContentType === 1 || currContentType ===3) {
             $("#htmlSaveBtn").empty();
             var code;
-            if (data.Content != null) {
-                if (currContentType === 1)
-                    code =  data.Content;
-                else
-                    code = '<div class="main-content">\n    <div class="example">\n        <h3>Example</h3>\n        <div class="w3-code">\n            <\!-- start css-block -->\n' + data.Content + '\n \n \n \n \n \n            <\!-- end css-block -->\n        </div>\n        <a class=" try-it-btn btn-link" target="_blank" href="">Try it Yourself >></a>\n    </div>\n</div>';
+            if (data.Content != null) {               
+                    code =  data.Content;                
             } else {
                 if (currContentType === 1)
                     code = content ? content: "";
                 else
-                    code = '<div class="main-content">\n    <div class="example">\n        <h3>Example</h3>\n        <div class="w3-code">\n            <\!-- start css-block -->\n            <\!-- end css-block -->\n        </div>\n        <a class="try-it-btn btn-link" target="_blank" href="">Try it Yourself >></a>\n    </div>\n</div>';
+                    code = '<div class="main-content">\n    <div class="example">\n        <h3>Ví dụ</h3>\n        <div class="w3-code">\n            <\!-- start css-block -->\n            <\!-- end css-block -->\n        </div>\n        <a class="try-it-btn btn-link" target="_blank" href="">Hãy tự mình thử >></a>\n    </div>\n</div>';
             }
 
             var html = '<div class="w-100" id="Content"><div class="row">'+
@@ -268,7 +265,7 @@
                     '</textarea>' +
                     '</div>' +
                     '<div class="workspace col-md-6 pl-md-1 p-1">' +
-                    '<iframe class="p-2"name="targetCode" id="targetCode"></iframe>' +
+                    '<iframe class="p-4"name="targetCode" id="targetCode"></iframe>' +
                 '</div>' +
                 '</div>'+
             '</div>';
@@ -351,7 +348,7 @@
         var target = $(".workspace");
         if (target.hasClass("col-md-6")) {
             target.removeClass("col-md-6").addClass("col-md-12");
-            target.children().css("height", "18rem");
+            target.children().css("height", "33rem");
         } else if (target.hasClass("col-md-12")) {
             target.removeClass("col-md-12").addClass("col-md-6");
             target.children().css("height", "33rem");
@@ -372,6 +369,14 @@
     }
 
     $(function () {
+        //add active class
+        let list = $("#sidebar").find("ul>li>a>span");
+        list.toArray().forEach(function (item, index) {
+            if (item.innerHTML === "Lesson Content")
+                item.parentElement.classList.add("active");
+        })
+        
+        
         window.addEventListener("resize", getSize);
         //render editor
         renderEditor();

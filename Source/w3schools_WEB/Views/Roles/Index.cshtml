@@ -37,6 +37,12 @@
 </script>
 <script src="~/js/initTable.js"></script>
 <script>
+    //add active class
+    let list = $("#sidebar").find("ul>li>a>span");
+    list.toArray().forEach(function (item, index) {
+        if (item.innerHTML === "Role")
+            item.parentElement.classList.add("active");
+    })
     dataGrid.columnOption("dateModified", "visible", true);
     dataGrid.columnOption("dateCreated", "visible", true);
     dataGrid.columnOption("createdBy", "visible", true);

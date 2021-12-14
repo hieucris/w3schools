@@ -75,11 +75,21 @@
     body {
         background-color: #add8e6;
     }
-
+    #ctner {
+        background-color: #E7E9EB;
+        margin-top: 8rem;
+    }
+    .img-fluid{
+        max-height:3.5rem;
+    }
+    #runBtn {
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 1.5rem !important;
+    }
     #framesize {
         position: absolute;
         right: 2rem;
-        top: 40%
+        top: 30%
     }
 
     #rotate {
@@ -99,12 +109,16 @@
 
     #ctner {
         background-color: #E7E9EB;
-        margin-top: 8rem;
+        /*margin-top: 8rem;*/
     }
 
     #targetCode {
         background-color: #fff !important;
         border: unset;
+    }
+
+    .CodeMirror.cm-s-default {
+        font-size: 1.5rem;
     }
 </style>
 <script>
@@ -160,7 +174,7 @@
         var target = $(".workspace");
         if (target.hasClass("col-md-6")) {
             target.removeClass("col-md-6").addClass("col-md-12 p-2");
-            target.children().css("height", "35vh");
+            target.children().css("height", "75vh");
         } else if (target.hasClass("col-md-12")) {
             target.removeClass("col-md-12 p-2").addClass("col-md-6");
             target.children().css("height", "75vh");

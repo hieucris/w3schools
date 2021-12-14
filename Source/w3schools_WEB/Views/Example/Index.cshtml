@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Lesson Categories";
+    ViewData["Title"] = "Example";
     Layout = "Admin_Layout";
 }
 <div class="page-content">
@@ -43,6 +43,12 @@
     }
 </style>
 <script>
+    //add active class
+    let list = $("#sidebar").find("ul>li>a>span");
+    list.toArray().forEach(function (item, index) {
+        if (item.innerHTML === "Example Code")
+            item.parentElement.classList.add("active");
+    })
     var listContent = new DevExpress.data.CustomStore({
         key: "lessonContentId",
         loadMode:"raw",
